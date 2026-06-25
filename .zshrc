@@ -8,6 +8,12 @@ export PATH=$PATH:$GOPATH/bin
 alias tf="terraform"
 alias ddb="aws dynamodb"
 
+# Run claude.sh with safehouse
+alias claude-safe="~/dotfiles/claude.sh"
+
 [ -f ~/dotfiles/z/z.sh ] && source ~/dotfiles/z/z.sh
 
-eval "$(direnv hook zsh)"
+# Load secrets if the file exists
+[ -f "$HOME/.secrets.zsh" ] && source "$HOME/.secrets.zsh"
+
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"
