@@ -14,7 +14,7 @@ cd ~/dotfiles
 
 1. Install [Homebrew](https://brew.sh) if it is missing.
 2. Install dependencies from the `Brewfile` (`brew bundle`).
-3. Symlink `~/.zshrc` → `~/dotfiles/.zshrc`.
+3. Symlink `~/.zshrc` → `~/dotfiles/zsh/.zshrc`.
 
 Then reload your shell:
 
@@ -26,13 +26,12 @@ source ~/.zshrc
 
 | Path           | Purpose                                                                 |
 | -------------- | ----------------------------------------------------------------------- |
-| `.zshrc`       | Shell config: PATH, aliases, `z`, secrets, `direnv` hook.               |
-| `install.sh`   | Bootstrap script (Homebrew + deps + symlinks).                          |
-| `Brewfile`     | Declarative dependency list installed via `brew bundle`.                |
-| `claude.sh`    | Runs Claude Code sandboxed inside Safehouse.                            |
-| `bin/safehouse`| Vendored Agent Safehouse sandbox binary.                                |
-| `z/`           | Vendored [`z`](https://github.com/rupa/z) directory jumper.             |
-| `profiles/`    | Custom Safehouse `.sb` sandbox profiles (optional overrides).           |
+| `zsh/.zshrc`      | Shell config: PATH, aliases, `z`, secrets, `direnv` hook.            |
+| `zsh/functions/`  | Auto-sourced `*.zsh` function files (e.g. `safe`).                   |
+| `install.sh`      | Bootstrap script (Homebrew + deps + symlinks).                       |
+| `Brewfile`        | Declarative dependency list installed via `brew bundle`.             |
+| `bin/safehouse`   | Vendored Agent Safehouse sandbox binary.                            |
+| `z/`              | Vendored [`z`](https://github.com/rupa/z) directory jumper.          |
 
 ## Dependencies
 
@@ -49,13 +48,19 @@ brew bundle dump --force --file=Brewfile
 
 ## Claude Code sandbox
 
-`claude.sh` wraps the `claude` CLI inside the Safehouse sandbox, with `ssh` and `docker` access enabled. Because the sandbox is the guardrail, it runs Claude with `--dangerously-skip-permissions`.
-
-A `claude-safe` alias is defined in `.zshrc`:
+The `safe` function (`zsh/functions/safehouse.zsh`) wraps the `claude` CLI inside the Safehouse sandbox. Because the sandbox is the guardrail, it runs Claude with `--dangerously-skip-permissions`.
 
 ```sh
-claude-safe            # launch sandboxed Claude Code
-claude-safe <args>     # args pass through to claude
+safe            # launch sandboxed Claude Code
+safe <args>     # args pass through to claude (e.g. safe --resume <id>)
+```
+
+The current directory is auto-granted read/write by Safehouse. Extra sandbox features are opt-in per project via a `.safe-features` file — one `--enable` feature per line (`#` comments allowed):
+
+```
+# .safe-features
+ssh
+docker
 ```
 
 ## Secrets
