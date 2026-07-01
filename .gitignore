@@ -1,3 +1,5 @@
 .secrets.zsh
 .z
 .DS_Store
+
+.safe-features
