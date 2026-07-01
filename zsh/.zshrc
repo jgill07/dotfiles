@@ -1,15 +1,18 @@
 
 export GOPATH=$HOME/go
 export deno_path="$HOME/.deno/bin"
-export PATH=$PATH:$deno_path
+export PATH="$PATH:$HOME/.local/bin:$deno_path"
 export PATH=$PATH:$GOPATH/bin
+
+
+# Source functions
+for f in "$HOME/dotfiles/zsh/functions/"*.zsh; do
+  [ -f "$f" ] && source "$f"
+done
 
 # Aliases
 alias tf="terraform"
 alias ddb="aws dynamodb"
-
-# Run claude.sh with safehouse
-alias claude-safe="~/dotfiles/claude.sh"
 
 [ -f ~/dotfiles/z/z.sh ] && source ~/dotfiles/z/z.sh
 

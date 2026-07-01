@@ -10,6 +10,6 @@ command -v brew >/dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubuserc
 brew bundle --file="$DOTFILES/Brewfile"
 
 # Create symlinks for zsh configuration file
-ln -sf "$DOTFILES/.zshrc" "$HOME/.zshrc"
+ln -sf "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
 
-echo "Linked ~/.zshrc -> $DOTFILES/.zshrc"
+echo "Linked ~/.zshrc -> $DOTFILES/zsh/.zshrc"
