@@ -63,6 +63,14 @@ ssh
 docker
 ```
 
+Environment variables are opt-in per project via a `.safe-env` file — one env var **name** per line (`#` comments allowed). The name's value is read from your current shell and passed into the sandbox via `--env-pass`, so no secret values are stored in the file:
+
+```
+# .safe-env
+ANTHROPIC_API_KEY
+GH_TOKEN
+```
+
 ## Secrets
 
 Secret environment variables are sourced from `~/.secrets.zsh` if present. This file is **not** tracked (see `.gitignore`). Create it manually on each machine.
